@@ -97,12 +97,13 @@ class SamplingParams:
         temperature: float = 1.0,
         top_p: float = 1.0,
         top_k: int = -1,
-        min_p: int = 0.0,
+        min_p: float = 0.0,
         use_beam_search: bool = False,
         length_penalty: float = 1.0,
         early_stopping: Union[bool, str] = False,
         stop: Optional[Union[str, List[str]]] = None,
         stop_token_ids: Optional[List[int]] = None,
+        include_stop_str_in_output: bool = False,
         ignore_eos: bool = False,
         max_tokens: int = 16,
         logprobs: Optional[int] = None,
@@ -140,6 +141,7 @@ class SamplingParams:
         self.skip_special_tokens = skip_special_tokens
         self.spaces_between_special_tokens = spaces_between_special_tokens
         self.logits_processors = logits_processors
+        self.include_stop_str_in_output = include_stop_str_in_output
         self._verify_args()
         if self.use_beam_search:
             self._verify_beam_search()
@@ -241,6 +243,8 @@ class SamplingParams:
                 f"length_penalty={self.length_penalty}, "
                 f"early_stopping={self.early_stopping}, "
                 f"stop={self.stop}, "
+                f"stop_token_ids={self.stop_token_ids}, "
+                f"include_stop_str_in_output={self.include_stop_str_in_output}, "
                 f"ignore_eos={self.ignore_eos}, "
                 f"max_tokens={self.max_tokens}, "
                 f"logprobs={self.logprobs}, "
